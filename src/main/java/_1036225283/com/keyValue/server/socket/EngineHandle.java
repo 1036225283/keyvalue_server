@@ -2,7 +2,6 @@ package _1036225283.com.keyValue.server.socket;
 
 import _1036225283.com.keyValue.server.socket.core.DefaultHandler;
 import _1036225283.com.keyValue.server.socket.util.HandlerFactory;
-import _1036225283.com.keyValue.server.socket.util.queue.UtilQueueHandle;
 
 import java.util.Map;
 
@@ -15,7 +14,6 @@ public class EngineHandle {
 
     private HandlerFactory handlerFactory;
     // 业务消息队列
-    private UtilQueueHandle queueHandle;
 
 
     private EngineSocket engineSocket;
@@ -28,17 +26,14 @@ public class EngineHandle {
     public void init() {
 
         handlerFactory = new HandlerFactory();
-        handlerFactory.regist("default", new DefaultHandler());
+        handlerFactory.register(0, new DefaultHandler());
 
         // 待处理消息队列
-        queueHandle = new UtilQueueHandle(this);
-        new Thread(queueHandle, "线程：业务队列线程").start();
 
 
     }
 
     public void push(Map<String, String> map) {
-        queueHandle.push(map);
     }
 
 

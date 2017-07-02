@@ -7,15 +7,13 @@ import _1036225283.com.keyValue.server.socket.core.Handler;
  *
  * @author 1036225283
  */
-public class HandlerFactory extends UtilRegister<Handler> {
+public class HandlerFactory extends UtilListRegister<Handler> {
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public Handler get(String key) {
+    public Handler get(int index) {
         // TODO Auto-generated method stub
-        Handler handler = super.get(key);
+        Handler handler = super.get(index);
         if (handler == null) {
-            return super.get("default");
+            return super.get(0);
         } else {
             return handler;
         }

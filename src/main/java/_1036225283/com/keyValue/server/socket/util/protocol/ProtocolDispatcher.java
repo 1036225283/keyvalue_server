@@ -21,6 +21,8 @@ public class ProtocolDispatcher {
             buffer.flip();
             int length = buffer.remaining();
             buffer.get(bs, 0, length);
+//            int index = bs[0];
+
             String request = new String(bs, 0, length);
             log.info(LogType.debug, "----HTTP分发数据 = " + request);
 

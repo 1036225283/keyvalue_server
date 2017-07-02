@@ -1,5 +1,6 @@
 package _1036225283.com.keyValue.server.handler.keyValue;
 
+import _1036225283.com.keyValue.client.UtilKeyValue;
 import _1036225283.com.keyValue.server.handler.UtilResult;
 import _1036225283.com.keyValue.server.socket.core.CoreType;
 import _1036225283.com.keyValue.server.socket.core.Handler;
@@ -18,20 +19,16 @@ public class GetHandler extends Handler {
 
 
     @Override
-    public void handle(Map<String, String> map) {
+    public byte[] handle(byte[] bs) {
         // TODO Auto-generated method stub
-        String param = map.get(CoreType.param.toString());
-        Map<String, String> paramMap = UtilParam.getParam(param);
-        String key = paramMap.get("key");
+        String key = UtilKeyValue.get(bs);
         if (key == null) {
-            map.put(CoreType.result.toString(), UtilResult.keyIsNull("key is null"));
-            return;
+            return new byte[]{5};
         }
-        Result result = keyValue.get(key);
 
-        long nanosecond = Long.valueOf(result.getTime());
-        map.put(CoreType.result.toString(), UtilResult.success(key, result.getValue(), nanosecond));
+        String value = keyValue.get_(key);
 
+        return UtilKeyValue.get(value);
     }
 
 }

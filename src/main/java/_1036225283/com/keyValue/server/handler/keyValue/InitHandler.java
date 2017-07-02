@@ -11,14 +11,12 @@ public class InitHandler extends Handler {
 	private static KeyValue keyValue = KeyValue.getInstance();
 
 	@Override
-	public void handle(Map<String, String> map) {
+	public byte[] handle(byte[]bs) {
 		// TODO Auto-generated method stub
-
 		for (int i = 0; i < 800000; i++) {
 			keyValue.set(i + "", i + "");
 		}
-
-		map.put(CoreType.result.toString(), "init is end");
+		return new byte[]{6};
 	}
 
 }

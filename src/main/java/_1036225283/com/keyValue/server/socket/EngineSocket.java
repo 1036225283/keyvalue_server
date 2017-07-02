@@ -1,5 +1,6 @@
 package _1036225283.com.keyValue.server.socket;
 
+import _1036225283.com.keyValue.server.socket.util.UtilListRegister;
 import _1036225283.com.keyValue.server.socket.util.UtilPoolThread;
 import _1036225283.com.keyValue.server.socket.util.factory.Factory;
 import _1036225283.com.keyValue.server.socket.util.pool.UtilPoolBuffer;
@@ -32,6 +33,7 @@ public class EngineSocket<T> {
 	 * 业务引擎
 	 */
 	private EngineHandle engineHandle;
+	private UtilListRegister utilListRegister;
 	private Integer port;
 	private CountStore countStore;
 	private ServerSocket serverSocket;
@@ -73,6 +75,8 @@ public class EngineSocket<T> {
 		queueRead = Factory.getReadQueue(this.getClass().getName(), this);
 		queueWrite = Factory.getWriteQueue(this.getClass().getName(), this);
 
+		utilListRegister = new UtilListRegister();
+
 		// 开启解析线程
 		new Thread(queueRead, "线程：读队列线程").start();
 		new Thread(queueWrite, "线程：写队列线程").start();
@@ -96,9 +100,6 @@ public class EngineSocket<T> {
 			log.dateInfo(LogType.time, this, "____________________________________________________");
 			log.dateInfo(LogType.time, this, "第一步：接收socket开始");
 			queueRead.push(socket);
-			// applicationContext.getQueueRead().push(socket);
-			// WriteTest writeTest = new WriteTest(socket);
-			// writeTest.start();
 			log.dateInfo(LogType.time, this, "第一步：接收socket结束");
 		}
 	}
@@ -124,9 +125,6 @@ public class EngineSocket<T> {
 		return poolMap;
 	}
 
-	public UtilPoolThread getPoolWebSocketThread() {
-		return null;
-	}
 
 	public EngineHandle getEngineHandle() {
 		return engineHandle;
@@ -177,8 +175,7 @@ public class EngineSocket<T> {
 		return protocolWriteFactory;
 	}
 
-	// public void setProtocolWriteFactory(ProtocolWriteFactory
-	// protocolWriteFactory) {
-	// this.protocolWriteFactory = protocolWriteFactory;
-	// }
+	public UtilListRegister getUtilListRegister() {
+		return utilListRegister;
+	}
 }

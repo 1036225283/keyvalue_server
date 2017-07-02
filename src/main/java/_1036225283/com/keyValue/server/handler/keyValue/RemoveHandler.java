@@ -1,22 +1,19 @@
 package _1036225283.com.keyValue.server.handler.keyValue;
 
-import _1036225283.com.keyValue.server.socket.core.CoreType;
+import _1036225283.com.keyValue.client.UtilKeyValue;
 import _1036225283.com.keyValue.server.socket.core.Handler;
 import com.nitian.util.keyvalue.KeyValue;
 
-import java.util.Map;
-
 public class RemoveHandler extends Handler {
-
 
     private static KeyValue keyValue = KeyValue.getInstance();
 
-
     @Override
-    public void handle(Map<String, String> map) {
+    public byte[] handle(byte[] bs) {
         // TODO Auto-generated method stub
-//		 String result = UtilJson.objectToString(map);
-        map.put(CoreType.result.toString(), "赵玉，我会不会慢慢喜欢上你");
+        String key = UtilKeyValue.remove(bs);
+        keyValue.del_(key);
+        return new byte[]{6};
     }
 
 }
