@@ -29,7 +29,7 @@ public class UtilQueueSocketChannel extends UtilQueue<SelectionKey> {
     @Override
     public synchronized void handle(SelectionKey selectionKey) {
         // TODO Auto-generated method stub
-        log.dateInfo(LogType.time, this, "第二步：开始解析SocketChannel中的http或者websocket数据");
+        log.dateInfo(LogType.time, this, "handler data start");
 
         try {
 
@@ -39,54 +39,37 @@ public class UtilQueueSocketChannel extends UtilQueue<SelectionKey> {
             }
             byte[] bs = engineSocket.getPoolByte().lend();
 
-
             byteBuffer.flip();
             int length = byteBuffer.remaining();
             byteBuffer.get(bs, 0, length);
             int index = bs[0];
 
-            engineSocket.getUtilListRegister().get(index);
+            byte[] writeBytes = engineSocket.getEngineHandle().getHandlerFactory().get(index).handle(bs);
 
+            SocketChannel socketChannel = (SocketChannel) selectionKey.channel();
 
-            SelectionKey key = (SelectionKey) selectionKey;
-            SocketChannel socketChannel = (SocketChannel) key.channel();
-
+            //nio 异常时关闭SelectionKey和SocketChannel
             if (!socketChannel.isConnected()) {
-                UtilSelectionKey.cancel(key);
+                UtilSelectionKey.cancel(selectionKey);
                 return;
             }
 
-
-            //nio 异常时关闭SelectionKey和SocketChannel
-//            UtilSelectionKey.cancel(key);
-
-            byteBuffer = engineSocket.getPoolBuffer().lend();
-            byteBuffer.put(bs);
+            byteBuffer.clear();
+            byteBuffer.put(writeBytes);
             byteBuffer.flip();
             socketChannel.write(byteBuffer);
 
-            this.engineSocket.callback(key);
-//            engineSocket.getPoolMap().repay(map);
+            this.engineSocket.callback(selectionKey);
             engineSocket.getPoolBuffer().repay(byteBuffer);
+            engineSocket.getPoolByte().repay(bs);
 
             log.info(LogType.thread, this, Thread.currentThread().toString());
-            log.dateInfo(LogType.time, this, "写消息队列处理结束");
-
-
-//            if (!protocolReadHandler.handle(map, buffer, bs)) {
-//                engineSocket.getPoolByte().repay(bs);
-//                engineSocket.getPoolBuffer().repay(buffer);
-//                selectionKey.channel().close();
-//                return;
-//            }
-            engineSocket.getPoolByte().repay(bs);
-//            engineSocket.getEngineHandle().push(map);
+            log.dateInfo(LogType.time, this, "消息队列处理结束");
 
         } catch (Exception e) {
-            log.error(e, "read线程异常");
+            log.error(e, "handler线程异常");
         }
 
-        log.dateInfo(LogType.time, this, "push数据到handler线程了");
 
     }
 
