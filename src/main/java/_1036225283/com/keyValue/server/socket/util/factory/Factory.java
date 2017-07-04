@@ -5,9 +5,6 @@ import _1036225283.com.keyValue.server.socket.EngineSocketNIO;
 import _1036225283.com.keyValue.server.socket.util.pool.UtilPoolBuffer;
 import _1036225283.com.keyValue.server.socket.util.queue.UtilQueue;
 import _1036225283.com.keyValue.server.socket.util.queue.UtilQueueSocketChannel;
-import _1036225283.com.keyValue.server.socket.util.store.CountStore;
-import _1036225283.com.keyValue.server.socket.util.store.CountStoreSelectionKey;
-import _1036225283.com.keyValue.server.socket.util.store.CountStoreSocket;
 
 /**
  * Created by 1036225283 on 2016/11/20.
@@ -15,20 +12,6 @@ import _1036225283.com.keyValue.server.socket.util.store.CountStoreSocket;
  */
 public class Factory {
 
-	/**
-	 * 获取计数存储socket等对象
-	 *
-	 * @param className
-	 * @return
-	 */
-	public static CountStore getCountStore(String className) {
-		if (className.equals(EngineSocket.class.getName())) {
-			return new CountStoreSocket();
-		} else if (className.equals(EngineSocketNIO.class.getName())) {
-			return new CountStoreSelectionKey();
-		}
-		return null;
-	}
 
 	/**
 	 * 获取读线程队列

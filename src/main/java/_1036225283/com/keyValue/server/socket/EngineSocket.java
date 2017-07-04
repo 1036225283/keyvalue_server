@@ -5,7 +5,6 @@ import _1036225283.com.keyValue.server.socket.util.pool.UtilPoolBuffer;
 import _1036225283.com.keyValue.server.socket.util.pool.UtilPoolByte;
 import _1036225283.com.keyValue.server.socket.util.pool.UtilPoolMap;
 import _1036225283.com.keyValue.server.socket.util.queue.UtilQueue;
-import _1036225283.com.keyValue.server.socket.util.store.CountStore;
 import com.nitian.util.log.LogManager;
 import com.nitian.util.log.LogType;
 
@@ -27,7 +26,6 @@ public class EngineSocket<T> {
      */
     private EngineHandle engineHandle;
     private Integer port;
-    private CountStore countStore;
     private ServerSocket serverSocket;
     private int poolMax = 800;
     private int poolTotal = 200;
@@ -48,8 +46,6 @@ public class EngineSocket<T> {
     public void init() {
 
         Thread.currentThread().setName("线程:主轮询线程");
-
-        countStore = Factory.getCountStore(this.getClass().getName());
 
         poolBuffer = Factory.getPoolBuffer(this.getClass().getName(), this);
         poolByte = new UtilPoolByte(poolMax, poolTotal, null);// socket读取缓冲区(lend:replay)
@@ -93,9 +89,6 @@ public class EngineSocket<T> {
         return poolBuffer;
     }
 
-    public CountStore getCountStore() {
-        return countStore;
-    }
 
     public UtilPoolMap getPoolMap() {
         return poolMap;
