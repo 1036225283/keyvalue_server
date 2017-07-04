@@ -5,12 +5,9 @@ import _1036225283.com.keyValue.server.socket.EngineSocketNIO;
 import _1036225283.com.keyValue.server.socket.util.pool.UtilPoolBuffer;
 import _1036225283.com.keyValue.server.socket.util.queue.UtilQueue;
 import _1036225283.com.keyValue.server.socket.util.queue.UtilQueueSocketChannel;
-import _1036225283.com.keyValue.server.socket.util.queue.UtilQueueWrite;
 import _1036225283.com.keyValue.server.socket.util.store.CountStore;
 import _1036225283.com.keyValue.server.socket.util.store.CountStoreSelectionKey;
 import _1036225283.com.keyValue.server.socket.util.store.CountStoreSocket;
-import _1036225283.com.keyValue.server.socket.util.write.UtilHttpWriteSocket;
-import _1036225283.com.keyValue.server.socket.util.write.UtilWrite;
 
 /**
  * Created by 1036225283 on 2016/11/20.
@@ -50,23 +47,6 @@ public class Factory {
 
 	}
 
-	/**
-	 * 获取写线程队列
-	 *
-	 * @param className
-	 * @param engineSocket
-	 * @return
-	 */
-	public static UtilQueue getWriteQueue(String className, EngineSocket engineSocket) {
-		System.out.println("------------------------------------" + className);
-		if (className.equals(EngineSocket.class.getName())) {
-			return new UtilQueueWrite(engineSocket);
-		} else if (className.equals(EngineSocketNIO.class.getName())) {
-			return new UtilQueueWrite(engineSocket);
-		}
-		return null;
-
-	}
 
 	/**
 	 * 获取buffer池
@@ -82,22 +62,6 @@ public class Factory {
 		}
 		return null;
 
-	}
-
-	/**
-	 * 获取 http write
-	 *
-	 * @param className
-	 * @return
-	 */
-	public static UtilWrite getUtilHttpWrite(String className) {
-		System.out.println("------------------------------------" + className);
-		if (className.equals(EngineSocket.class.getName())) {
-			return new UtilHttpWriteSocket();
-		} else if (className.equals(EngineSocketNIO.class.getName())) {
-			return new UtilHttpWriteSocket();
-		}
-		return null;
 	}
 
 }

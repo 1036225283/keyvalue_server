@@ -44,7 +44,7 @@ public class UtilQueueSocketChannel extends UtilQueue<SelectionKey> {
             byteBuffer.get(bs, 0, length);
             int index = bs[0];
 
-            byte[] writeBytes = engineSocket.getEngineHandle().getHandlerFactory().get(index).handle(bs);
+            byte[] writeBytes = engineSocket.getEngineHandle().getHandlerFactory().get(index).handle(bs, length);
 
             SocketChannel socketChannel = (SocketChannel) selectionKey.channel();
 

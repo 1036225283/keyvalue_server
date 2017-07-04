@@ -11,9 +11,9 @@ public class SetHandler extends Handler {
     private static KeyValue keyValue = KeyValue.getInstance();
 
     @Override
-    public byte[] handle(byte[] bs) {
+    public byte[] handle(byte[] bs, int length) {
         // TODO Auto-generated method stub
-        KvNode node = UtilKeyValue.set(bs);
+        KvNode node = UtilKeyValue.set(bs, length);
 
         keyValue.set_(node.getKey(), node.getValue());
         return new byte[]{6};

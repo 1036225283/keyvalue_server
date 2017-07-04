@@ -4,9 +4,9 @@ package _1036225283.com.keyValue.server.socket.core;
 public class DefaultHandler extends Handler {
 
     @Override
-    public byte[] handle(byte[] bs) {
+    public byte[] handle(byte[] bs, int length) {
         // TODO Auto-generated method stub
-        return new byte[]{5};
+        return new byte[]{0};
     }
 
 }

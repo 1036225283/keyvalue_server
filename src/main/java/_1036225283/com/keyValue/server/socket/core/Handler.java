@@ -6,6 +6,6 @@ public abstract class Handler {
 
     }
 
-    public abstract byte[] handle(byte[]bs);
+    public abstract byte[] handle(byte[] bs, int length);
 
 }
