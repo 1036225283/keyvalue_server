@@ -3,9 +3,10 @@ package _1036225283.com.keyValue.server.test;
 import _1036225283.com.keyValue.server.handler.keyValue.GetHandler;
 import _1036225283.com.keyValue.server.handler.keyValue.RemoveHandler;
 import _1036225283.com.keyValue.server.handler.keyValue.SetHandler;
-import _1036225283.com.keyValue.server.socket.EngineHandle;
 import _1036225283.com.keyValue.server.socket.EngineSocket;
 import _1036225283.com.keyValue.server.socket.EngineSocketNIO;
+import _1036225283.com.keyValue.server.socket.core.DefaultHandler;
+import _1036225283.com.keyValue.server.socket.util.HandlerFactory;
 import com.nitian.util.log.LogManager;
 
 import java.util.HashMap;
@@ -33,9 +34,7 @@ public class ServerTest {
 //
 //            log.putType(LogType.time.toString());
 
-            EngineHandle engineHandle = new EngineHandle();
             EngineSocket engineSocket = new EngineSocketNIO(8888);
-            engineSocket.setEngineHandle(engineHandle);
 
             countMap.put("count", 0L);
 
@@ -46,7 +45,8 @@ public class ServerTest {
             // bs[0] = 4 // remove key
             // bs[0] = 5 // error
             // bs[0] = 6 // ok
-            engineHandle.getHandlerFactory()
+            engineSocket.handlerFactory
+                    .register(0, new DefaultHandler())
                     .register(1, new SetHandler())
                     .register(2, new GetHandler())
                     .register(4, new RemoveHandler())

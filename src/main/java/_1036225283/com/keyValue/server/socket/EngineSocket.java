@@ -1,5 +1,6 @@
 package _1036225283.com.keyValue.server.socket;
 
+import _1036225283.com.keyValue.server.socket.util.HandlerFactory;
 import _1036225283.com.keyValue.server.socket.util.factory.Factory;
 import _1036225283.com.keyValue.server.socket.util.pool.UtilPoolBuffer;
 import _1036225283.com.keyValue.server.socket.util.pool.UtilPoolByte;
@@ -21,10 +22,8 @@ public class EngineSocket<T> {
     public LogManager log = LogManager.getInstance();
 
 
-    /**
-     * 业务引擎
-     */
-    private EngineHandle engineHandle;
+    public HandlerFactory handlerFactory = new HandlerFactory();
+
     private Integer port;
     private ServerSocket serverSocket;
     private int poolMax = 800;
@@ -76,10 +75,6 @@ public class EngineSocket<T> {
         }
     }
 
-    public void setEngineHandle(EngineHandle engineHandle) {
-        this.engineHandle = engineHandle;
-        engineHandle.setEngineSocket(this);
-    }
 
     public UtilPoolByte getPoolByte() {
         return poolByte;
@@ -94,10 +89,6 @@ public class EngineSocket<T> {
         return poolMap;
     }
 
-
-    public EngineHandle getEngineHandle() {
-        return engineHandle;
-    }
 
     public void setPort(int port) {
         this.port = port;
