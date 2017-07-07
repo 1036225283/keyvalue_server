@@ -1,5 +1,6 @@
 package _1036225283.com.keyValue.server.handler.keyValue;
 
+import _1036225283.com.keyValue.client.Operation;
 import _1036225283.com.keyValue.client.UtilKeyValue;
 import _1036225283.com.keyValue.server.socket.core.Handler;
 import com.nitian.util.keyvalue.KeyValue;
@@ -22,7 +23,7 @@ public class GetHandler extends Handler {
 
         String value = keyValue.get_(key);
 
-        return UtilKeyValue.get(value);
+        return UtilKeyValue.get(Operation.SUCCESS, value);
     }
 
 }
