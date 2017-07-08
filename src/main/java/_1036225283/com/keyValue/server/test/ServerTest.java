@@ -4,8 +4,8 @@ import _1036225283.com.keyValue.server.handler.keyValue.GetHandler;
 import _1036225283.com.keyValue.server.handler.keyValue.RemoveHandler;
 import _1036225283.com.keyValue.server.handler.keyValue.SetHandler;
 import _1036225283.com.keyValue.server.socket.EngineSocket;
-import _1036225283.com.keyValue.server.socket.EngineSocketNIO;
 import _1036225283.com.keyValue.server.socket.core.DefaultHandler;
+import _1036225283.com.keyValue.server.socket.util.factory.Factory;
 import com.nitian.util.log.LogManager;
 
 import java.util.HashMap;
@@ -17,8 +17,6 @@ public class ServerTest {
     public static void main(String[] args) {
 
         LogManager log = LogManager.getInstance();
-
-        final Map<String, Long> countMap = new HashMap<>();
 
 
         try {
@@ -33,9 +31,8 @@ public class ServerTest {
 //
 //            log.putType(LogType.time.toString());
 
-            EngineSocket engineSocket = new EngineSocketNIO(8888);
-
-            countMap.put("count", 0L);
+//            EngineSocket engineSocket = new EngineSocketNIO(8888);
+            EngineSocket engineSocket = new EngineSocket(8888);
 
             // bs[0] = 0 // default protocol error
             // bs[0] = 1 // set key value
@@ -43,8 +40,9 @@ public class ServerTest {
             // bs[0] = 3 // result
             // bs[0] = 4 // remove key
             // bs[0] = 5 // error
+
             // bs[0] = 6 // ok
-            engineSocket.handlerFactory
+            Factory.handlerFactory
                     .register(0, new DefaultHandler())
                     .register(1, new SetHandler())
                     .register(2, new GetHandler())

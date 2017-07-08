@@ -1,6 +1,7 @@
 package _1036225283.com.keyValue.server.socket.util.queue;
 
 import _1036225283.com.keyValue.server.socket.EngineSocket;
+import _1036225283.com.keyValue.server.socket.util.factory.Factory;
 import _1036225283.com.keyValue.server.socket.util.key.UtilSelectionKey;
 import com.nitian.util.log.LogManager;
 import com.nitian.util.log.LogType;
@@ -11,7 +12,7 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
 
 /**
- * 直接解析buffer => bs[] ,call listHandler,return byte[],write byte[] to socket channel
+ * nio 直接解析buffer => bs[] ,call listHandler,return byte[],write byte[] to socket channel
  *
  * @author 1036225283
  */
@@ -44,7 +45,8 @@ public class UtilQueueSocketChannel extends UtilQueue<SelectionKey> {
             byteBuffer.get(bs, 0, length);
             int index = bs[0];
 
-            byte[] writeBytes = engineSocket.handlerFactory.get(index).handle(bs, length);
+
+            byte[] writeBytes = Factory.handlerFactory.get(index).handle(bs, length);
 
             SocketChannel socketChannel = (SocketChannel) selectionKey.channel();
 
@@ -108,11 +110,6 @@ public class UtilQueueSocketChannel extends UtilQueue<SelectionKey> {
             log.dateInfo(LogType.time, this, "读取的数据长度为-1，需要释放key和其他资源");
             return null;
         }
-
-        //偿还资源
-
-//        return new String(bs, 0, size, "UTF-8");
-
         return null;
     }
 

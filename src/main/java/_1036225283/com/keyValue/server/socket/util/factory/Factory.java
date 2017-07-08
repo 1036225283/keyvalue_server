@@ -2,6 +2,7 @@ package _1036225283.com.keyValue.server.socket.util.factory;
 
 import _1036225283.com.keyValue.server.socket.EngineSocket;
 import _1036225283.com.keyValue.server.socket.EngineSocketNIO;
+import _1036225283.com.keyValue.server.socket.util.HandlerFactory;
 import _1036225283.com.keyValue.server.socket.util.pool.UtilPoolBuffer;
 import _1036225283.com.keyValue.server.socket.util.queue.UtilQueue;
 import _1036225283.com.keyValue.server.socket.util.queue.UtilQueueSocketChannel;
@@ -12,6 +13,8 @@ import _1036225283.com.keyValue.server.socket.util.queue.UtilQueueSocketChannel;
  */
 public class Factory {
 
+
+	public static HandlerFactory handlerFactory = new HandlerFactory();
 
 	/**
 	 * 获取读线程队列

@@ -1,17 +1,18 @@
 package _1036225283.com.keyValue.server.socket;
 
-import _1036225283.com.keyValue.server.socket.util.HandlerFactory;
+import _1036225283.com.keyValue.server.socket.util.SocketThread;
 import _1036225283.com.keyValue.server.socket.util.factory.Factory;
 import _1036225283.com.keyValue.server.socket.util.pool.UtilPoolBuffer;
 import _1036225283.com.keyValue.server.socket.util.pool.UtilPoolByte;
 import _1036225283.com.keyValue.server.socket.util.pool.UtilPoolMap;
-import _1036225283.com.keyValue.server.socket.util.queue.UtilQueue;
 import com.nitian.util.log.LogManager;
 import com.nitian.util.log.LogType;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by 1036225283 on 2016/11/13.
@@ -22,14 +23,15 @@ public class EngineSocket<T> {
     public LogManager log = LogManager.getInstance();
 
 
-    public HandlerFactory handlerFactory = new HandlerFactory();
-
     private Integer port;
     private ServerSocket serverSocket;
     private int poolMax = 800;
     private int poolTotal = 200;
 
-    private UtilQueue queueRead;
+    private int nMaxSocket = 20;
+
+    private List<SocketThread> list = new ArrayList<>();
+
 
     private UtilPoolBuffer poolBuffer;
     private UtilPoolByte poolByte;
@@ -50,11 +52,6 @@ public class EngineSocket<T> {
         poolByte = new UtilPoolByte(poolMax, poolTotal, null);// socket读取缓冲区(lend:replay)
         poolMap = new UtilPoolMap(poolMax, poolTotal);// 解析数据缓冲区(lend:)
 
-        queueRead = Factory.getReadQueue(this.getClass().getName(), this);
-
-
-        // 开启解析线程
-        new Thread(queueRead, "线程：读队列线程").start();
     }
 
     public void start() throws IOException {
@@ -68,9 +65,17 @@ public class EngineSocket<T> {
         log.info(LogType.debug, this, "server is start");
         while (true) {
             Socket socket = serverSocket.accept();
-            log.dateInfo(LogType.time, this, "____________________________________________________");
             log.dateInfo(LogType.time, this, "第一步：接收socket开始");
-            queueRead.push(socket);
+            System.out.println("socketCount =  " + list.size());
+            if (nMaxSocket > list.size()) {
+                SocketThread socketThread = new SocketThread(socket);
+                list.add(socketThread);
+                new Thread(socketThread).start();
+            } else {
+                socket.close();
+                log.dateInfo(LogType.time, this, "nMaxSocket is max,socket is close");
+            }
+
             log.dateInfo(LogType.time, this, "第一步：接收socket结束");
         }
     }
@@ -94,9 +99,6 @@ public class EngineSocket<T> {
         this.port = port;
     }
 
-    public UtilQueue getQueueRead() {
-        return queueRead;
-    }
 
     public Integer getPort() {
         return port;

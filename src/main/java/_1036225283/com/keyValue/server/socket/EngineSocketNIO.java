@@ -12,6 +12,7 @@ import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 
 /**
+ * nio
  * Created by 1036225283 on 2016/11/17.
  */
 public class EngineSocketNIO extends EngineSocket<SelectionKey> {
