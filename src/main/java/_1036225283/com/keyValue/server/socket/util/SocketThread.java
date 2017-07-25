@@ -11,6 +11,7 @@ import java.net.Socket;
  */
 public class SocketThread implements Runnable {
 
+    private boolean auth = false;//是否验证密码
     private Socket socket;
     byte[] bs = new byte[1024 * 64];
 
