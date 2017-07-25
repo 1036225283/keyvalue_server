@@ -7,6 +7,7 @@ import _1036225283.com.keyValue.server.socket.EngineSocket;
 import _1036225283.com.keyValue.server.socket.core.DefaultHandler;
 import _1036225283.com.keyValue.server.socket.util.factory.Factory;
 import com.nitian.util.log.LogManager;
+import com.nitian.util.log.LogType;
 
 public class ServerTest {
 
@@ -23,13 +24,13 @@ public class ServerTest {
 
 //            log.putType(LogType.debug.toString());
 //            log.putType(LogType.error.toString());
-//            log.putType(LogType.info.toString());
+            log.putType(LogType.info.toString());
 //            log.putType(LogType.warning.toString());
 //
 //            log.putType(LogType.time.toString());
 
 //            EngineSocket engineSocket = new EngineSocketNIO(8888);
-            EngineSocket engineSocket = new EngineSocket(8888);
+            EngineSocket engineSocket = new EngineSocket(9999);
 
             // bs[0] = 0 // default protocol error
             // bs[0] = 1 // set key value
