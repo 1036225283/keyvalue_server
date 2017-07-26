@@ -22,6 +22,8 @@ public class UtilTimer {
             public void run() {
                 List<Info> list = Factory.list;
 
+                log.dateInfo(this, "connection.size:" + list.size());
+
                 for (int i = 0; i < list.size(); i++) {
                     Info info = list.get(i);
 
