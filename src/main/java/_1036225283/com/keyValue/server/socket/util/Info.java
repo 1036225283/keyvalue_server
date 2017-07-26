@@ -15,4 +15,27 @@ public class Info {
         this.socketThread = socketThread;
     }
 
+    public Thread getThread() {
+        return thread;
+    }
+
+    public void setThread(Thread thread) {
+        this.thread = thread;
+    }
+
+    public SocketThread getSocketThread() {
+        return socketThread;
+    }
+
+    public void setSocketThread(SocketThread socketThread) {
+        this.socketThread = socketThread;
+    }
+
+    public boolean state() {
+        return state;
+    }
+
+    public void setState(boolean state) {
+        this.state = state;
+    }
 }

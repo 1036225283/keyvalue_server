@@ -1,23 +1,60 @@
 package _1036225283.com.keyValue.server.socket.util;
 
-import com.nitian.util.random.UtilRandom;
+import com.nitian.util.log.LogManager;
 
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-//扫描需要示范的资源
+//扫描需要释放的资源
 public class UtilTimer {
 
-    public static void main(String[] args) {
+    static LogManager log = LogManager.getInstance();
+
+    static {
         timer();
     }
 
     public static void timer() {
         Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
+        timer.schedule(new TimerTask() {
+            @Override
             public void run() {
-                System.out.println("-------设定要指定任务--------");
-                System.out.println(UtilRandom.createUUID());
+                List<Info> list = Factory.list;
+
+                for (int i = 0; i < list.size(); i++) {
+                    Info info = list.get(i);
+
+                    try {
+                        if (!info.state()) {
+                            info.getThread().interrupt();
+                            info.getSocketThread().getSocket().close();
+                            log.dateInfo(this, info.state() + "");
+                            list.remove(info);
+                            break;
+                        }
+
+                        if (info.getSocketThread().getSocket().isClosed()) {
+                            info.getThread().interrupt();
+                            info.getSocketThread().getSocket().close();
+                            log.dateInfo(this, info.state() + "");
+                            list.remove(info);
+                            break;
+                        }
+
+                        if (!info.getThread().isAlive()) {
+                            info.getThread().interrupt();
+                            info.getSocketThread().getSocket().close();
+                            log.dateInfo(this, info.state() + "");
+                            list.remove(info);
+                            break;
+                        }
+
+                    } catch (Exception e) {
+                        log.dateInfo(this, e.getMessage());
+                    }
+
+                }
             }
         }, 1000, 2000);
     }

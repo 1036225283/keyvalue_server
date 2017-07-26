@@ -1,5 +1,7 @@
 package _1036225283.com.keyValue.server.socket;
 
+import _1036225283.com.keyValue.server.socket.util.Factory;
+import _1036225283.com.keyValue.server.socket.util.Info;
 import _1036225283.com.keyValue.server.socket.util.SocketThread;
 import com.nitian.util.log.LogManager;
 import com.nitian.util.log.LogType;
@@ -7,8 +9,6 @@ import com.nitian.util.log.LogType;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by 1036225283 on 2016/11/13.
@@ -24,9 +24,7 @@ public class EngineSocket<T> {
     private int poolMax = 800;
     private int poolTotal = 200;
 
-    private int nMaxSocket = 2;
-
-    private List<Thread> list = new ArrayList<>();
+    private int nMaxSocket = 20;
 
     public EngineSocket(int port) {
         this.port = port;
@@ -54,10 +52,11 @@ public class EngineSocket<T> {
         while (true) {
             Socket socket = serverSocket.accept();
             log.dateInfo(this, "第一步：接收socket开始,ip:" + socket.getInetAddress().getHostAddress() + ",port:" + socket.getPort());
-            if (nMaxSocket > list.size()) {
+            if (nMaxSocket > Factory.list.size()) {
                 SocketThread socketThread = new SocketThread(socket);
                 Thread thread = new Thread(socketThread);
-                list.add(thread);
+                Info info = new Info(thread, socketThread);
+                Factory.list.add(info);
                 thread.start();
             } else {
                 socket.close();

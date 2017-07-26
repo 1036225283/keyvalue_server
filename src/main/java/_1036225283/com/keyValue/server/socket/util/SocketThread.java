@@ -3,6 +3,7 @@ package _1036225283.com.keyValue.server.socket.util;
 import com.nitian.util.log.LogManager;
 
 import java.net.Socket;
+import java.util.List;
 
 /**
  * socket thread , read and write
@@ -30,6 +31,22 @@ public class SocketThread implements Runnable {
                     socket.close();
                     return;
                 }
+
+                if (!auth) {
+                    boolean result = UtilKeyValueServer.auth(bs, length);
+                    if (result) {
+                        auth = true;
+                        byte[] writeBytes = UtilKeyValueServer.SUCCESS("auto success");
+                        socket.getOutputStream().write(writeBytes);
+                        continue;
+                    } else {
+                        byte[] writeBytes = UtilKeyValueServer.ERROR("connection server,first ,auth by password. place call client.auth(xxx)");
+                        socket.getOutputStream().write(writeBytes);
+                        socket.close();
+                        return;
+                    }
+                }
+
                 int index = bs[0];
                 byte[] writeBytes = Factory.handlerFactory.get(index).handle(bs, length);
                 socket.getOutputStream().write(writeBytes);
@@ -38,5 +55,9 @@ public class SocketThread implements Runnable {
             log.error(e, "handler线程异常" + e.getMessage());
         }
 
+    }
+
+    public Socket getSocket() {
+        return socket;
     }
 }
