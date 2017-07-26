@@ -5,7 +5,7 @@ import _1036225283.com.keyValue.server.handler.keyValue.RemoveHandler;
 import _1036225283.com.keyValue.server.handler.keyValue.SetHandler;
 import _1036225283.com.keyValue.server.socket.EngineSocket;
 import _1036225283.com.keyValue.server.socket.core.DefaultHandler;
-import _1036225283.com.keyValue.server.socket.util.factory.Factory;
+import _1036225283.com.keyValue.server.socket.util.Factory;
 import com.nitian.util.log.LogManager;
 import com.nitian.util.log.LogType;
 
