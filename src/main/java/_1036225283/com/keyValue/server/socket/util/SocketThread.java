@@ -3,7 +3,6 @@ package _1036225283.com.keyValue.server.socket.util;
 import com.nitian.util.log.LogManager;
 
 import java.net.Socket;
-import java.util.List;
 
 /**
  * socket thread , read and write

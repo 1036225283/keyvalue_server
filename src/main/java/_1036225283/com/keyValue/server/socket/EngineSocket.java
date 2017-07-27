@@ -48,9 +48,14 @@ public class EngineSocket<T> {
         Thread.currentThread().setName("线程：服务主线程");
         log.info(LogType.thread, this, Thread.currentThread().toString());
         serverSocket = new ServerSocket(port);
+        serverSocket.setReceiveBufferSize(32 * 1024);
         log.info(LogType.debug, this, "server is start");
         while (true) {
             Socket socket = serverSocket.accept();
+            socket.setTcpNoDelay(true);
+            socket.setSoLinger(true, 3);
+            socket.setReceiveBufferSize(32 * 1024);
+            socket.setSendBufferSize(32 * 1024);
             log.dateInfo(this, "第一步：接收socket开始,ip:" + socket.getInetAddress().getHostAddress() + ",port:" + socket.getPort());
             if (nMaxSocket > Factory.list.size()) {
                 SocketThread socketThread = new SocketThread(socket);
