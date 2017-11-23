@@ -22,14 +22,14 @@
 
         <!-- -->
         <dependency>
-            <groupId>xws</groupId>
+            <groupId>1036225283.com</groupId>
             <artifactId>util.self</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0.0</version>
         </dependency>
 
         <dependency>
             <groupId>1036225283.com</groupId>
-            <artifactId>keyValue.client</artifactId>
+            <artifactId>keyvalue.client</artifactId>
             <version>1.0.0</version>
         </dependency>
 
