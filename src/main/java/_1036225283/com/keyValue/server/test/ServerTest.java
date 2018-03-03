@@ -7,8 +7,8 @@ import _1036225283.com.keyValue.server.socket.EngineSocket;
 import _1036225283.com.keyValue.server.socket.core.DefaultHandler;
 import _1036225283.com.keyValue.server.socket.util.Factory;
 import _1036225283.com.keyValue.server.socket.util.UtilTimer;
-import com.nitian.util.log.LogManager;
-import com.nitian.util.log.LogType;
+import com._1036225283.util.self.log.LogManager;
+import com._1036225283.util.self.log.LogType;
 
 public class ServerTest {
 

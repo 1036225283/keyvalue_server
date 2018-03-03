@@ -3,8 +3,8 @@ package _1036225283.com.keyValue.server.socket;
 import _1036225283.com.keyValue.server.socket.util.Factory;
 import _1036225283.com.keyValue.server.socket.util.Info;
 import _1036225283.com.keyValue.server.socket.util.SocketThread;
-import com.nitian.util.log.LogManager;
-import com.nitian.util.log.LogType;
+import com._1036225283.util.self.log.LogManager;
+import com._1036225283.util.self.log.LogType;
 
 import java.io.IOException;
 import java.net.ServerSocket;
